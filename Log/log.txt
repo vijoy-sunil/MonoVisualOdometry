@@ -1,0 +1,21 @@
+[ INF ] Write initial tPose to file 
+[ INF ] Constructed ground truth trajectory 4541 
+[ INF ] Constructed projectionCL 
+[ DEB ] 718.856 0 607.193 0 
+[ DEB ] 0 718.856 185.216 0 
+[ DEB ] 0 0 1 0 
+[ INF ] Extracted intrinsic params 718.856 718.856 607.193 185.216 
+[ INF ] Read image ../../Data/sequences/00/image_0/000000.png 376 1241 
+[ INF ] Read image ../../Data/sequences/00/image_0/000001.png 376 1241 
+[ INF ] Computed feature vector 4607 
+[ INF ] Feature matching complete 
+[ INF ] Feature vector sizes 4607 4607 
+[ INF ] Status vector sizes 4607 
+[ INF ] Status vector valid points 4397 
+[ INF ] Status vector valid points Bounds filter 4338 
+[ INF ] Extracted common features 4338 
+[ TST ] Show connection between matched features 
+[ INF ] Estimated trajectory vector size 1 
+[ INF ] Ground truth vector size 4541 
+[ DEB ] Calculated:  0 0 0  Truth:  5.55111e-17 3.33067e-16 -4.44089e-16 
+[ INF ] Measured error 5.5788e-16 
