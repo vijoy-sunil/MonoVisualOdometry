@@ -45,8 +45,8 @@ int main(void){
         std::vector<cv::Point2f> featurePointsT2 = VO.matchFeatureKLT(featurePointsT1);
         /* estimate motion
         */
-        //estimatedTrajectory.push_back(VO.estimateMotion(featurePointsT1, 
-        //                                                featurePointsT2));
+        estimatedTrajectory.push_back(VO.estimateMotion(featurePointsT1, 
+                                                        featurePointsT2));
         /* show progress bar
         */
         float progress = (float)(i+1)/(float)(numFrames-1);

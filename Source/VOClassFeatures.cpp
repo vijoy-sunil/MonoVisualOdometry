@@ -134,8 +134,17 @@ std::vector<cv::Point2f> VOClass::matchFeatureKLT(std::vector<cv::Point2f> &feat
     testShowDetectedFeatures(imgLT1, fLT1);
     testShowDetectedFeatures(imgLT2, fLT2);
 #endif
-    /* return the final output after removing invalid features
-     * the matching features between LT1 and LT2 are fLT1 and fLT2
+    /* Note that while doing KLT tracking, we will eventually lose some points (as they 
+     * move out of the field of view of the car), and we should trigger a redetection 
+     * whenever the total number of features go below a certain threshold
+    */
+    int triggerRedetectionThreshold = 2000;
+    if(numCommonFeatures < triggerRedetectionThreshold){
+        Logger.addLog(Logger.levels[ERROR], "Feature count too low");
+        assert(false);
+    }
+    /* return the final output after removing invalid features the matching features 
+     * between LT1 and LT2 are fLT1 and fLT2
     */
     featurePointsLT1 = fLT1;
     return fLT2;

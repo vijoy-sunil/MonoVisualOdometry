@@ -15,7 +15,7 @@
 #define SHOW_ALL_FAST_FEATURES                              0
 #define SHOW_FEATURE_MATCHING_OPTICAL_FLOW                  0
 #define SHOW_FEATURE_MATCHING_OPTICAL_FLOW_BOUNDS_FILTER    0
-#define SHOW_FEATURE_MATCHING_CONNECT                       1
+#define SHOW_FEATURE_MATCHING_CONNECT                       0
 #define SHOW_ALL_FAST_FEATURES_STABLE                       0
 #define SHOW_GROUND_TRUTH_AND_ESTIMATED_TRAJECTORY          0
 /* This is done so that it doesn't clear contents of saved output pose
