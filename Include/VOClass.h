@@ -49,6 +49,9 @@ class VOClass{
         void removeInvalidFeatures(std::vector<cv::Point2f>& featurePointsPrev, 
                                    std::vector<cv::Point2f>& featurePointsCurrent, 
                                    std::vector<unsigned char> status);
+        /* get scale factor from ground truth
+        */
+        double getScaleFactor(int frameNumber);
         /* file handler for output pose
         */
         std::ofstream estimatedPoseFileHandler;
@@ -75,14 +78,15 @@ class VOClass{
         /* feature matching
         */
         std::vector<cv::Point2f> matchFeatureKLT(std::vector<cv::Point2f> &featurePointsLT1);
-        /* integrated pose matrix [R|t] (homogeneous matrix 4x4)
-         * the first pose is identity
+        /* integrated pose of the camera be RPose, tPose;
         */
-        cv::Mat poseRt = cv::Mat::eye(4, 4, CV_64F);
+        cv::Mat RPose = cv::Mat::zeros(3, 3, CV_64F);
+        cv::Mat tPose = cv::Mat::zeros(3, 1, CV_64F);
         /* estimate motion
         */
         cv::Mat estimateMotion(std::vector<cv::Point2f> featurePointsT1, 
-                               std::vector<cv::Point2f> featurePointsT2);
+                               std::vector<cv::Point2f> featurePointsT2,
+                               int frameNumber);
         /* compute error
         */
         float computeErrorInPoseEstimation(std::vector<cv::Mat> estimatedTrajectory);

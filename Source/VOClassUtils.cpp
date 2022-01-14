@@ -106,3 +106,25 @@ void VOClass::removeInvalidFeatures(std::vector<cv::Point2f>& featurePointsPrev,
     featurePointsPrev = validPointsPrev;
     featurePointsCurrent = validPointsCurrent;
 }
+
+double VOClass::getScaleFactor(int frameNumber){
+    float scale = 0;
+    /* scale = (xnext, ynext, znext) - (x, y, z)
+    */
+    double xNext = groundTruth[frameNumber+1].at<double>(0, 0);
+    double yNext = groundTruth[frameNumber+1].at<double>(1, 0);
+    double zNext = groundTruth[frameNumber+1].at<double>(2, 0);
+
+    double xCurr = groundTruth[frameNumber].at<double>(0, 0);
+    double yCurr = groundTruth[frameNumber].at<double>(1, 0);
+    double zCurr = groundTruth[frameNumber].at<double>(2, 0);
+#if 0
+    Logger.addLog(Logger.levels[DEBUG], "Scale factor variables", xNext, yNext, zNext, 
+                                                                  xCurr, yCurr, zCurr);
+#endif
+    scale = sqrt(pow(xNext - xCurr, 2) + 
+                 pow(yNext - yCurr, 2) + 
+                 pow(zNext - zCurr, 2));
+    Logger.addLog(Logger.levels[INFO], "Computed scale factor", scale, frameNumber);
+    return scale;
+}
