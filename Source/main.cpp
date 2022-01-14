@@ -46,7 +46,8 @@ int main(void){
         /* estimate motion
         */
         estimatedTrajectory.push_back(VO.estimateMotion(featurePointsT1, 
-                                                        featurePointsT2));
+                                                        featurePointsT2, 
+                                                        i));
         /* show progress bar
         */
         float progress = (float)(i+1)/(float)(numFrames-1);
