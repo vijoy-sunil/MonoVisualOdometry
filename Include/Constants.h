@@ -3,13 +3,13 @@
 
 #include <string>
 
-/* When set, the application reads pose output from previous run and
- * plots it agains ground truth
+/* When set, the application reads pose output from previous run and plots it against 
+ * ground truth
 */
 #define READ_ESTIMATED_POSE_FILE                            0
 /* Debug macros
 */
-#define LIMITED_FRAMES_TEST_MODE                            1
+#define LIMITED_FRAMES_TEST_MODE                            0
 #define SHOW_IMAGE_PAIR                                     0
 #define SHOW_GROUND_TRUTH_TRAJECTORY                        0
 #define SHOW_ALL_FAST_FEATURES                              0
@@ -17,9 +17,15 @@
 #define SHOW_FEATURE_MATCHING_OPTICAL_FLOW_BOUNDS_FILTER    0
 #define SHOW_FEATURE_MATCHING_CONNECT                       0
 #define SHOW_ALL_FAST_FEATURES_STABLE                       0
-#define SHOW_GROUND_TRUTH_AND_ESTIMATED_TRAJECTORY          0
-/* This is done so that it doesn't clear contents of saved output pose
- * file
+#define SHOW_LIVE_TRAJECTORY                                1
+/* Either do live plot or static plot
+*/
+#if SHOW_LIVE_TRAJECTORY
+    #define SHOW_GROUND_TRUTH_AND_ESTIMATED_TRAJECTORY      0
+#else
+    #define SHOW_GROUND_TRUTH_AND_ESTIMATED_TRAJECTORY      1  
+#endif
+/* This is done so that it doesn't clear contents of saved output pose file
 */
 #if READ_ESTIMATED_POSE_FILE
     #define WRITE_ESTIMATED_POSE_FILE                       0
@@ -27,8 +33,7 @@
     #define WRITE_ESTIMATED_POSE_FILE                       1   
 #endif
 
-/* choose the set of images to use in the KITTI dataset; 00 to 10
- * sets of data
+/* choose the set of images to use in the KITTI dataset; 00 to 10 sets of data
 */
 const std::string sequenceID = "00";
 /* limited frame mode

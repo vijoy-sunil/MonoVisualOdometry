@@ -62,7 +62,7 @@ std::vector<cv::Point2f> VOClass::matchFeatureKLT(std::vector<cv::Point2f> &feat
     cv::TermCriteria termCrit = cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, 
                                                  maxCount, epsilon);
     
-    /* matched feattures in LT2
+    /* matched feattures in imgLT2
     */
     std::vector<cv::Point2f> featurePointsLT2;
     /* output status vector (of unsigned chars); each element of the vector is set
@@ -98,8 +98,8 @@ std::vector<cv::Point2f> VOClass::matchFeatureKLT(std::vector<cv::Point2f> &feat
 #if SHOW_FEATURE_MATCHING_OPTICAL_FLOW
     testShowFeatureMatchingOpticalFlow(imgLT1, featurePointsLT1, featurePointsLT2, status);
 #endif
-    /* update status vector for invalid feature points; calculated point 
-     * (x,y) would be out of bounds
+    /* update status vector for invalid feature points; calculated point  (x,y) would 
+    * be out of bounds
     */
     markInvalidFeaturesBounds(featurePointsLT2, status);
 
@@ -134,15 +134,6 @@ std::vector<cv::Point2f> VOClass::matchFeatureKLT(std::vector<cv::Point2f> &feat
     testShowDetectedFeatures(imgLT1, fLT1);
     testShowDetectedFeatures(imgLT2, fLT2);
 #endif
-    /* Note that while doing KLT tracking, we will eventually lose some points (as they 
-     * move out of the field of view of the car), and we should trigger a redetection 
-     * whenever the total number of features go below a certain threshold
-    */
-    int triggerRedetectionThreshold = 2000;
-    if(numCommonFeatures < triggerRedetectionThreshold){
-        Logger.addLog(Logger.levels[ERROR], "Feature count too low");
-        assert(false);
-    }
     /* return the final output after removing invalid features the matching features 
      * between LT1 and LT2 are fLT1 and fLT2
     */

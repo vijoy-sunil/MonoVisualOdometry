@@ -52,6 +52,10 @@ int main(void){
         */
         float progress = (float)(i+1)/(float)(numFrames-1);
         showProgressBar(progress);
+
+#if SHOW_LIVE_TRAJECTORY
+        VO.testShowLiveTrajectory(i + 1, estimatedTrajectory.back(), numFrames);
+#endif
     }
     /* compute error between estimated trajectory and ground truth
     */

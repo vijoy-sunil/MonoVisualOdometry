@@ -78,9 +78,9 @@ class VOClass{
         /* feature matching
         */
         std::vector<cv::Point2f> matchFeatureKLT(std::vector<cv::Point2f> &featurePointsLT1);
-        /* integrated pose of the camera be RPose, tPose;
+        /* integrated pose of the camera RPose, tPose;
         */
-        cv::Mat RPose = cv::Mat::zeros(3, 3, CV_64F);
+        cv::Mat RPose = cv::Mat::eye(3, 3, CV_64F);
         cv::Mat tPose = cv::Mat::zeros(3, 1, CV_64F);
         /* estimate motion
         */
@@ -106,6 +106,11 @@ class VOClass{
                                             std::vector<cv::Point2f> fLT2);
         void testShowTrajectoryPair(std::vector<cv::Mat> estimatedTrajectory);
         void testShowTrajectoryPairFromFile(const std::string filePath);
+        /* live trajectory window
+        */    
+        int liveWindowR, liveWindowC;
+        cv::Mat liveWindow;
+        void testShowLiveTrajectory(int frameNumber, cv::Mat currentPose, int numFrames);
 };
 #endif /* VOCLASS_H
 */

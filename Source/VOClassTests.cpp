@@ -226,3 +226,82 @@ void VOClass::testShowTrajectoryPairFromFile(const std::string filePath){
         Logger.addLog(Logger.levels[WARNING], "Unable to open estimated pose file");
     }
 }
+
+/* live plot ground truth ,estimated pose and image
+*/
+void VOClass::testShowLiveTrajectory(int frameNumber, cv::Mat currentPose, int numFrames){
+    /* min frame number passed in has to be 1
+    */
+    assert(frameNumber != 0);
+    cv::Mat imgPair;
+    /* if this function is called with frameNumber = 1, then it means that
+     * currentPose is the pose estimated from frame 0 to frame 1; so we need
+     * to plot frame 0 (imgLT1) and initial pose first
+    */
+    if(frameNumber - 1 == 0){
+        int p1GOrigin = groundTruth[0].at<double>(0, 0) + liveWindowC/2;
+        int p2GOrigin = groundTruth[0].at<double>(2, 0) + liveWindowR/4; 
+
+        int p1EOrigin = 0 + liveWindowC/2;
+        int p2EOrigin = 0 + liveWindowR/4;   
+        /* plot points; origin point in green
+        */
+        cv::circle(liveWindow, cv::Point(p1GOrigin, p2GOrigin), 5, CV_RGB(0, 255, 0), 2);
+        cv::circle(liveWindow, cv::Point(p1EOrigin, p2EOrigin), 5, CV_RGB(0, 255, 0), 2);
+        /* use imgLT1 for first frame
+        */  
+        cv::Mat imgChannelChangedOrigin;
+        cv::cvtColor(imgLT1, imgChannelChangedOrigin, cv::COLOR_GRAY2RGB);
+        /* annotate frame
+        */
+        std::string text = "FRAME: " + std::to_string(frameNumber - 1);
+        cv::putText(imgChannelChangedOrigin, text, cv::Point(20, 40), 
+                                                   cv::FONT_HERSHEY_DUPLEX, 
+                                                   1, cv::Scalar(255, 255, 255), 1);
+        /* concat
+        */   
+        cv::vconcat(imgChannelChangedOrigin, liveWindow, imgPair);
+        imshow("Live Trajectory", imgPair);
+        cv::waitKey(1);        
+    }
+    /* frame number 1, 2, ...., numFrames - 1
+    */
+    /* current pose which is the last added element in estimated trajectory
+    */    
+    int p1G = groundTruth[frameNumber].at<double>(0, 0) + liveWindowC/2;
+    int p2G = groundTruth[frameNumber].at<double>(2, 0) + liveWindowR/4; 
+
+    int p1E = currentPose.at<double>(0, 0) + liveWindowC/2;
+    int p2E = currentPose.at<double>(2, 0) + liveWindowR/4;
+    /* plot points; last point in red
+    */
+    if(frameNumber == numFrames - 1){
+        cv::circle(liveWindow, cv::Point(p1G, p2G), 5, CV_RGB(255, 0, 0), 2);
+        cv::circle(liveWindow, cv::Point(p1E, p2E), 5, CV_RGB(255, 0, 0), 2);
+    }
+    else{
+        cv::circle(liveWindow, cv::Point(p1G, p2G), 1, CV_RGB(0, 0, 255), 2);
+        cv::circle(liveWindow, cv::Point(p1E, p2E), 1, CV_RGB(255, 255, 0), 2);
+    }
+    /* img is a single channel image, we will convert it to 3
+     * to color our feature points
+    */
+    cv::Mat imgChannelChanged;
+    cv::cvtColor(imgLT2, imgChannelChanged, cv::COLOR_GRAY2RGB);
+    /* annotate frame
+    */
+    std::string text = "FRAME: " + std::to_string(frameNumber);
+    cv::putText(imgChannelChanged, text, cv::Point(20, 40), 
+                                         cv::FONT_HERSHEY_DUPLEX, 
+                                         1, cv::Scalar(255, 255, 255), 1);
+    /* concat
+    */
+    cv::vconcat(imgChannelChanged, liveWindow, imgPair);
+    imshow("Live Trajectory", imgPair);
+    /* wait idefinitely if last frame
+    */
+    if(frameNumber == numFrames - 1)
+        cv::waitKey(0);
+    else
+        cv::waitKey(1);       
+}
