@@ -8,7 +8,8 @@
 VOClass::VOClass(void){
     /* width = number of cols (x)
      * height = number of rows (y)
-     * KITTI dataset specification
+     * KITTI dataset specification for sequence 00; Changes this to match the
+     * image dimensions if using a different sequence
     */
     frameW = 1241; 
     frameH = 376;
